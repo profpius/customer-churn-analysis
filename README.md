@@ -126,6 +126,6 @@ customer-churn-analysis/
 
 ## A Note on Where I Am
 
-This is my second GitHub project as an MSc Data Science student. I'm still building and there's a lot more I want to add to projects like this (modelling, feature importance, maybe a dashboard). But I believe in documenting what I learn as I go, not waiting until everything is perfect.
+This is my second GitHub project and I'm still building and there's a lot more I want to add to projects like this (modelling, feature importance, maybe a dashboard). But I believe in documenting what I learn as I go, not waiting until everything is perfect.
 
 If you have feedback or just want to connect — feel free to reach out on 
