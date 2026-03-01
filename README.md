@@ -6,7 +6,8 @@
 ![Seaborn](https://img.shields.io/badge/Seaborn-Visualization-4C72B0)
 ![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
 
-**Author:** Pius Victor &nbsp;|&nbsp; **MSc Data Science** &nbsp;|&nbsp; March 2026
+**Author:** Pius Victor &nbsp;|&nbsp;
+March 2026
 
 ---
 
@@ -99,7 +100,7 @@ Based on what I found, I'd suggest:
 Clone the repo and you're good to go — the dataset is included.
 
 ```bash
-git clone https://github.com/your-username/customer-churn-analysis.git
+git clone https://github.com/profpius/customer-churn-analysis.git
 cd customer-churn-analysis
 pip install -r requirements.txt
 jupyter notebook churn_analysis.ipynb
