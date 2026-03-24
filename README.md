@@ -91,8 +91,6 @@ Based on what I found, I'd suggest:
 1. **Target the no-membership and basic-tier customers first.** That's where 96%+ of the churn is coming from. Even converting a small % to the next tier would make a real dent.
 2. **Fix the complaints process.** Not just logging complaints but actually tracking resolution and following up. That's where the churn risk sits.
 3. **Take the feedback seriously.** Product quality and customer service are cited most often. These aren't hard to improve incrementally if there's buy-in from the right teams.
-4. **Keep an eye on city customers.** They're the highest-risk group by region and probably the most competitive market to retain.
-
 ---
 
 ## How to Run It
