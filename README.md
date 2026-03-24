@@ -13,13 +13,13 @@ March 2026
 
 ## What This Project Is About
 
-This is my second data project and honestly the one where things started clicking for me.
+This is my first data project and honestly the one where things started clicking for me.
 
 I wanted to work on something that felt like a real business problem, not just a clean textbook dataset. Customer churn made sense because almost every company deals with it and the data is messy in ways that actually teach you something.
 
 The question I was trying to answer: *what separates customers who stay from customers who leave, and can we spot the difference before it's too late?*
 
-The dataset has 36,992 customer records across 24 features — demographics, transaction history, engagement behaviour, support complaints, and feedback. The target variable is `churn_risk_score` (0 = stayed, 1 = churned).
+The dataset has 36,992 customer records across 24 features that includes demographics, transaction history, engagement behaviour, support complaints, and feedback. The target variable is `churn_risk_score` (0 = stayed, 1 = churned).
 
 ---
 
@@ -46,7 +46,7 @@ Before any analysis, I had to deal with a bunch of real data quality issues. Thi
 - Missing categorical fields got filled with `'Unknown'` so I didn't lose entire rows
 - Remaining numerical nulls got median imputation
 
-I used median over mean throughout because the data had outliers that would've skewed the mean and I actually learned that the hard way on my first project.
+I used median over mean throughout because the data had outliers that would've skewed the mean which i learnt the hard way while practicing.
 
 ---
 
@@ -97,7 +97,7 @@ Based on what I found, I'd suggest:
 
 ## How to Run It
 
-Clone the repo and you're good to go — the dataset is included.
+Clone the repo and you're good to go, the dataset is included.
 
 ```bash
 git clone https://github.com/profpius/customer-churn-analysis.git
@@ -119,13 +119,13 @@ customer-churn-analysis/
 ├── churn_analysis.ipynb    # The full notebook
 ├── churn.csv               # Dataset used for the analysis
 ├── requirements.txt        # Project dependencies
-└── charts/                 # Plots saved during the run
+└── churn_analysis_charts.pdf  # Plots saved during the run 
 ```
 
 ---
 
 ## A Note on Where I Am
 
-This is my second GitHub project and I'm still building and there's a lot more I want to add to projects like this (modelling, feature importance, maybe a dashboard). But I believe in documenting what I learn as I go, not waiting until everything is perfect.
+This is my first GitHub project and I'm still building and there's a lot more I want to add to projects like this (modelling, feature importance, maybe a dashboard). But I believe in documenting what I learn as I go, not waiting until everything is perfect.
 
-If you have feedback or just want to connect — feel free to reach out on 
+If you have feedback or just want to connect, you can feel free to reach out on 
