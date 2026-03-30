@@ -12,54 +12,50 @@
 
 ## What This Project Is About
 
-This is my first data project and honestly the one where things started clicking for me.
+This is my first data project and the one where things started clicking for me. I wanted to work on something that felt like a real business problem, not just a clean textbook dataset. Customer churn made sense because almost every company deals with it, and the data is messy in ways that actually teach you something.
 
-I wanted to work on something that felt like a real business problem, not just a clean textbook dataset. Customer churn made sense because almost every company deals with it and the data is messy in ways that actually teach you something.
+The question I set out to answer: *what separates customers who stay from customers who leave, and can we spot the difference before it is too late?*
 
-The question I was trying to answer: *what separates customers who stay from customers who leave, and can we spot the difference before it's too late?*
-
-The dataset has 36,992 customer records across 24 features including demographics, transaction history, engagement behaviour, support complaints, and feedback. The target variable is `churn_risk_score` (0 = stayed, 1 = churned).
+The dataset contains 36,992 customer records across 24 features, including demographics, transaction history, engagement behaviour, support complaints, and feedback. The target variable is `churn_risk_score` (0 = stayed, 1 = churned).
 
 ---
 
-## Tools I Used
+## Tools Used
 
 - **Python 3.10**
-- **Pandas** — for cleaning and wrangling the data
-- **NumPy** — for handling the numerical stuff
-- **Matplotlib & Seaborn** — for visualisations
-- **Google Colab** — where I ran everything
+- **Pandas** for cleaning and wrangling the data
+- **NumPy** for handling numerical operations
+- **Matplotlib & Seaborn** for visualisations
+- **Google Colab** as the runtime environment
 
-Nothing really fancy. Just the fundamentals, used properly.
+Nothing fancy. Just the fundamentals, used properly.
 
 ---
 
 ## The Data Was a Mess (And That Was the Point)
 
-Before any analysis, I had to deal with a bunch of real data quality issues. This part took longer than I expected but taught me a lot:
+Before any analysis, I had to work through a number of real data quality issues. This stage took longer than expected but was one of the most instructive parts of the project.
 
-- Some columns were completely useless (`Unnamed: 0`, `security_no`, `referral_id`) and I dropped them
-- `avg_frequency_login_days` had non-numeric values hiding in it — I coerced it to numeric and replaced errors with the median
-- `days_since_last_login` had `-999` as a placeholder for missing data — I replaced it with the median
-- `avg_time_spent` had negative values which made no sense for time, so I capped them at the median of valid values
-- Missing categorical fields got filled with `'Unknown'` so I didn't lose entire rows
-- Remaining numerical nulls got median imputation
-
-I used median over mean throughout because the data had outliers that would've skewed the mean, which I learnt the hard way while practising.
+- **Dropped useless columns:** `Unnamed: 0`, `security_no`, and `referral_id` contained no useful information.
+- **Fixed a mixed-type column:** `avg_frequency_login_days` had non-numeric values hiding in it. These were coerced to numeric, with errors replaced by the median.
+- **Replaced sentinel values:** `days_since_last_login` used `-999` as a placeholder for missing data. These were replaced with the median.
+- **Capped invalid values:** `avg_time_spent` had negative values, which make no sense for a time measure. These were capped at the median of valid values.
+- **Filled missing categoricals:** Missing categorical fields were filled with `'Unknown'` to avoid losing entire rows.
+- **Median imputation throughout:** Remaining numerical nulls received median imputation. The data had enough outliers that using the mean would have skewed results, which I learned the hard way while practising.
 
 ---
 
 ## What I Found
 
-### The headline number
+### The Headline Number
 
-**54.1% of customers churned.** That's not a small edge case — that's more than half the customer base gone.
+**54.1% of customers churned.** This is not a small edge case. More than half the customer base left, which makes churn the central operational problem for this business.
 
 ---
 
-### Membership tier was the biggest signal
+### Membership Tier Was the Strongest Signal
 
-This surprised me with how clean the split was:
+The relationship between membership tier and churn rate was the clearest finding in the dataset. The split is dramatic and almost perfectly monotonic.
 
 | Membership Tier | Churn Rate |
 |---|---|
@@ -70,33 +66,31 @@ This surprised me with how clean the split was:
 | Platinum Membership | 0.0% |
 | Premium Membership | 0.0% |
 
-The split is dramatic. No Membership and Basic customers churn at almost 97% — they are essentially guaranteed to leave. Platinum and Premium members churn at 0% — perfect retention. The loyalty programme works at the top but completely fails to catch customers at the bottom.
+Customers without a membership or on the Basic tier churn at nearly 97%. Platinum and Premium members churn at 0%. The loyalty programme works extremely well at the top end but provides no retention benefit for customers at the bottom. This is where the biggest opportunity lies.
 
 ---
 
-### Age had almost no effect
+### Age Had Almost No Effect
 
-Churn rate was essentially flat across all age groups:
+Churn rate was essentially flat across all age groups, varying by just 1.8 percentage points across the full range. Age is not a useful predictor of churn in this dataset.
 
 | Age Group | Churn Rate |
 |---|---|
 | Under 20 | 53.2% |
-| 20-30 | 54.1% |
-| 30-40 | 55.0% |
-| 40-50 | 53.7% |
+| 20–30 | 54.1% |
+| 30–40 | 55.0% |
+| 40–50 | 53.7% |
 | 50+ | 54.5% |
 
-The variation is just 1.8 percentage points across the entire range. Age is not a useful predictor of churn in this dataset.
+---
+
+### Complaint History Was a Major Signal
+
+Customers who filed a complaint churned at **71.7%** versus **36.9%** for those who did not. That is a 34.8 percentage point gap and one of the clearest signals in the data. How a complaint gets handled matters as much as whether it was filed at all.
 
 ---
 
-### Complaint history was a major signal
-
-Customers who filed a complaint churned at **71.7%** vs **36.9%** for those who didn't. That's a 34.8 percentage point gap and one of the clearest signals in the data. If a customer raised a complaint and it wasn't resolved well, they were far more likely to leave.
-
----
-
-### Why customers actually said they left
+### Why Customers Said They Left
 
 | Feedback Reason | Churned Customers |
 |---|---|
@@ -104,10 +98,10 @@ Customers who filed a complaint churned at **71.7%** vs **36.9%** for those who 
 | Poor Customer Service | 4,758 |
 | No reason specified | 3,609 |
 | Too many ads | 2,763 |
-| Products always in Stock | 1,182 |
-| Reasonable Price | 997 |
-| User Friendly Website | 571 |
-| Quality Customer Care | 385 |
+| Products always in stock | 1,182 |
+| Reasonable price | 997 |
+| User-friendly website | 571 |
+| Quality customer care | 385 |
 
 Not pricing. Not competition. The basics.
 
@@ -115,15 +109,15 @@ Not pricing. Not competition. The basics.
 
 ## What the Business Should Do About It
 
-1. **Target no-membership and basic-tier customers first.** These two groups have the highest churn rates (62% and 59.6%). Even moving a fraction of them to the next tier would make a measurable dent.
-2. **Fix product quality and customer service.** These are the two most cited reasons churned customers gave. They are not abstract problems — they are fixable with the right internal buy-in.
-3. **Take complaint resolution seriously.** The 71.7% churn rate among customers with complaints vs 36.9% without tells you that how you handle a complaint matters as much as whether it was filed.
+1. **Target no-membership and basic-tier customers first.** These two groups have churn rates above 96%. Even moving a small fraction of them into the Silver tier would produce a measurable improvement in overall retention.
+2. **Fix product quality and customer service.** These are the two most cited reasons churned customers gave. They are specific, operational problems that can be addressed with the right internal prioritisation.
+3. **Take complaint resolution seriously.** The gap between 71.7% churn among customers with complaints and 36.9% without shows that unresolved complaints are a direct driver of churn. Improving how complaints are handled is a lever that is available immediately.
 
 ---
 
 ## How to Run It
 
-Clone the repo and you're good to go — the dataset is included.
+Clone the repository and you are good to go. The dataset is included.
 
 ```bash
 git clone https://github.com/profpius/customer-churn-analysis.git
@@ -132,7 +126,7 @@ pip install -r requirements.txt
 jupyter notebook churn_analysis.ipynb
 ```
 
-Or hit the **Open in Colab** badge at the top.
+Alternatively, click the **Open in Colab** badge at the top to run everything in the browser with no local setup required.
 
 ---
 
@@ -142,7 +136,7 @@ Or hit the **Open in Colab** badge at the top.
 customer-churn-analysis/
 │
 ├── README.md                  # You're reading it
-├── churn_analysis.ipynb       # The full notebook
+├── churn_analysis.ipynb       # The full analysis notebook
 ├── churn.csv                  # Dataset used for the analysis
 ├── requirements.txt           # Project dependencies
 └── churn_analysis_charts.pdf  # All 5 charts exported from the notebook
@@ -152,6 +146,6 @@ customer-churn-analysis/
 
 ## A Note on Where I Am
 
-This is my first GitHub project and I'm still building. There's a lot more I want to add to projects like this — modelling, feature importance, maybe a dashboard. But I believe in documenting what I learn as I go, not waiting until everything is perfect.
+This is my first GitHub project and I am still building. There is a lot more I want to add to projects like this, including modelling, feature importance, and possibly a dashboard. I believe in documenting what I learn as I go rather than waiting until everything is polished.
 
-If you have feedback or just want to connect, find me on [LinkedIn](https://linkedin.com/in/victor-pius-4061a9332).
+If you have feedback or want to connect, find me on [LinkedIn](https://linkedin.com/in/victor-pius-4061a9332).
