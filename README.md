@@ -6,8 +6,7 @@
 ![Seaborn](https://img.shields.io/badge/Seaborn-Visualization-4C72B0)
 ![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
 
-**Author:** Pius Victor &nbsp;|&nbsp;
-March 2026
+**Author:** Pius Victor &nbsp;|&nbsp; March 2026
 
 ---
 
@@ -19,7 +18,7 @@ I wanted to work on something that felt like a real business problem, not just a
 
 The question I was trying to answer: *what separates customers who stay from customers who leave, and can we spot the difference before it's too late?*
 
-The dataset has 36,992 customer records across 24 features that includes demographics, transaction history, engagement behaviour, support complaints, and feedback. The target variable is `churn_risk_score` (0 = stayed, 1 = churned).
+The dataset has 36,992 customer records across 24 features including demographics, transaction history, engagement behaviour, support complaints, and feedback. The target variable is `churn_risk_score` (0 = stayed, 1 = churned).
 
 ---
 
@@ -39,62 +38,92 @@ Nothing really fancy. Just the fundamentals, used properly.
 
 Before any analysis, I had to deal with a bunch of real data quality issues. This part took longer than I expected but taught me a lot:
 
-- Some columns were completely useless (`Unnamed: 0`, `security_no`, `referral_id`) and i dropped them
-- `avg_frequency_login_days` had non-numeric values hiding in it, i coerced it to numeric and replaced errors with the median
-- `days_since_last_login` had `-999` as a placeholder for missing data which i replaced with median
-- `avg_time_spent` had negative values which didn't make sense for time, so i capped at the median of valid values
+- Some columns were completely useless (`Unnamed: 0`, `security_no`, `referral_id`) and I dropped them
+- `avg_frequency_login_days` had non-numeric values hiding in it — I coerced it to numeric and replaced errors with the median
+- `days_since_last_login` had `-999` as a placeholder for missing data — I replaced it with the median
+- `avg_time_spent` had negative values which made no sense for time, so I capped them at the median of valid values
 - Missing categorical fields got filled with `'Unknown'` so I didn't lose entire rows
 - Remaining numerical nulls got median imputation
 
-I used median over mean throughout because the data had outliers that would've skewed the mean which i learnt the hard way while practicing.
+I used median over mean throughout because the data had outliers that would've skewed the mean, which I learnt the hard way while practising.
 
 ---
 
 ## What I Found
 
 ### The headline number
-**54.1% of customers churned.** That's not a small edge case because that's more than half the customer base gone.
+
+**54.1% of customers churned.** That's not a small edge case — that's more than half the customer base gone.
+
+---
 
 ### Membership tier was the biggest signal
+
 This surprised me with how clean the split was:
 
 | Membership Tier | Churn Rate |
 |---|---|
-| No Membership | >97% |
-| Basic | >96% |
-| Silver | Elevated |
-| Gold | Moderate |
-| Premium | ~0% |
-| Platinum | ~0% |
+| No Membership | 97.1% |
+| Basic Membership | 96.8% |
+| Silver Membership | 42.8% |
+| Gold Membership | 37.0% |
+| Platinum Membership | 0.0% |
+| Premium Membership | 0.0% |
 
-Customers with no membership have almost no reason to stay loyal. Premium and Platinum members barely churn at all. The loyalty programme is clearly doing something right at the top end, but nothing is being done to bring lower-tier customers up.
+The split is dramatic. No Membership and Basic customers churn at almost 97% — they are essentially guaranteed to leave. Platinum and Premium members churn at 0% — perfect retention. The loyalty programme works at the top but completely fails to catch customers at the bottom.
 
-### Complaints matter, but not in the obvious way
-Customers who filed a complaint churned at 54.5% vs 53.7% for those who didn't. The gap is a bit small,  but I think that's because it averages out resolved and unresolved complaints together. If you could separate those, I'd expect the gap to be much wider.
+---
+
+### Age had almost no effect
+
+Churn rate was essentially flat across all age groups:
+
+| Age Group | Churn Rate |
+|---|---|
+| Under 20 | 53.2% |
+| 20-30 | 54.1% |
+| 30-40 | 55.0% |
+| 40-50 | 53.7% |
+| 50+ | 54.5% |
+
+The variation is just 1.8 percentage points across the entire range. Age is not a useful predictor of churn in this dataset.
+
+---
+
+### Complaint history was a major signal
+
+Customers who filed a complaint churned at **71.7%** vs **36.9%** for those who didn't. That's a 34.8 percentage point gap and one of the clearest signals in the data. If a customer raised a complaint and it wasn't resolved well, they were far more likely to leave.
+
+---
 
 ### Why customers actually said they left
-Looking at feedback from churned customers, the two most common reasons were:
-1. Poor product quality
-2. Poor customer service
+
+| Feedback Reason | Churned Customers |
+|---|---|
+| Poor Product Quality | 5,642 |
+| Poor Customer Service | 4,758 |
+| No reason specified | 3,609 |
+| Too many ads | 2,763 |
+| Products always in Stock | 1,182 |
+| Reasonable Price | 997 |
+| User Friendly Website | 571 |
+| Quality Customer Care | 385 |
 
 Not pricing. Not competition. The basics.
-
-### City customers churn the most
-Urban customers had the highest churn of any region. My guess is more options and higher expectations, but that's worth digging into further.
 
 ---
 
 ## What the Business Should Do About It
 
-Based on what I found, I'd suggest:
+1. **Target no-membership and basic-tier customers first.** These two groups have the highest churn rates (62% and 59.6%). Even moving a fraction of them to the next tier would make a measurable dent.
+2. **Fix product quality and customer service.** These are the two most cited reasons churned customers gave. They are not abstract problems — they are fixable with the right internal buy-in.
+3. **Take complaint resolution seriously.** The 71.7% churn rate among customers with complaints vs 36.9% without tells you that how you handle a complaint matters as much as whether it was filed.
 
-1. **Target the no-membership and basic-tier customers first.** That's where 96%+ of the churn is coming from. Even converting a small % to the next tier would make a real dent.
-2. **Take the feedback seriously.** Product quality and customer service are cited most often. These aren't hard to improve incrementally if there's buy-in from the right teams.
 ---
 
 ## How to Run It
 
-Clone the repo and you're good to go, the dataset is included.
+Clone the repo and you're good to go — the dataset is included.
 
 ```bash
 git clone https://github.com/profpius/customer-churn-analysis.git
@@ -112,17 +141,17 @@ Or hit the **Open in Colab** badge at the top.
 ```
 customer-churn-analysis/
 │
-├── README.md               # You're reading it
-├── churn_analysis.ipynb    # The full notebook
-├── churn.csv               # Dataset used for the analysis
-├── requirements.txt        # Project dependencies
-└── churn_analysis_charts.pdf  # Plots saved during the run 
+├── README.md                  # You're reading it
+├── churn_analysis.ipynb       # The full notebook
+├── churn.csv                  # Dataset used for the analysis
+├── requirements.txt           # Project dependencies
+└── churn_analysis_charts.pdf  # All 5 charts exported from the notebook
 ```
 
 ---
 
 ## A Note on Where I Am
 
-This is my first GitHub project and I'm still building and there's a lot more I want to add to projects like this (modelling, feature importance, maybe a dashboard). But I believe in documenting what I learn as I go, not waiting until everything is perfect.
+This is my first GitHub project and I'm still building. There's a lot more I want to add to projects like this — modelling, feature importance, maybe a dashboard. But I believe in documenting what I learn as I go, not waiting until everything is perfect.
 
-If you have feedback or just want to connect, you can feel free to reach out on 
+If you have feedback or just want to connect, find me on [LinkedIn](https://linkedin.com/in/victor-pius-4061a9332).
