@@ -117,7 +117,7 @@ Not pricing. Not competition. The basics.
 
 ## How to Run It
 
-Clone the repository and you are good to go. The dataset is included.
+Just clone the repository and you are good to go. The dataset is included.
 
 ```bash
 git clone https://github.com/profpius/customer-churn-analysis.git
